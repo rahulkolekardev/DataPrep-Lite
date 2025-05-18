@@ -58,7 +58,7 @@
 
 ### From PyPI (Recommended)
 
-Once DataPrep-Lite is published to PyPI, you can install it using pip:
+DataPrep-Lite is published to PyPI, you can install it using pip:
 
 ```bash
 pip install dataprep-lite
