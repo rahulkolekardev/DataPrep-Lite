@@ -1,28 +1,25 @@
 # /var/www/html/GIT PROJECTS/PYTHON GITHUB CONTRIBUTION PROJECTS/dataprep_lite/setup.py
 
 from setuptools import setup, find_packages
-import re # Import the regular expression module
+import re
 import os
 
-# MORE ROBUST Function to read the version from __init__.py
+# Function to read the version from dataprep_lite/dataprep_lite/__init__.py
 def get_version():
-    # __init__.py is in the same directory as setup.py
-    init_py_path = "__init__.py"
-    with open(init_py_path, "r") as f:
+    # Path to the __init__.py file of your *package*
+    # This is now inside the 'dataprep_lite' sub-directory.
+    package_init_py = os.path.join(os.path.dirname(__file__), "dataprep_lite", "__init__.py")
+    with open(package_init_py, "r") as f:
         version_file_content = f.read()
-    
-    # Use a regular expression to find the __version__ string
-    # This regex looks for a line like: __version__ = "0.1.0"
-    # or __version__ = '0.1.0'
+
     version_match = re.search(
         r"^__version__\s*=\s*['\"]([^'\"]*)['\"]",
         version_file_content,
-        re.M, # M for multiline matching
+        re.M,
     )
     if version_match:
-        return version_match.group(1) # Return the captured version string
-    raise RuntimeError("Unable to find version string in %s." % (init_py_path,))
-
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string in %s." % (package_init_py,))
 
 # Read README.md for the long description
 try:
@@ -32,16 +29,27 @@ except FileNotFoundError:
     long_description = "A lightweight data cleaning and preprocessing library for Python."
 
 setup(
-    name='dataprep-lite',
+    name='dataprep-lite', # The name of your package on PyPI (can have hyphens)
     version=get_version(), # Call corrected get_version()
-    author='Rahul K',                # Your name
-    author_email='[rkolekar913@gmail.com]', # Your email
+    author='Rahul K',
+    author_email='rkolekar913@gmail.com', # Removed the unnecessary brackets
     description='A lightweight data cleaning and preprocessing library for Python.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/rahulkolekardev/DataPrep-Lite',
     license='MIT',
+
+    # find_packages will look for packages in the current directory (where setup.py is)
+    # It will find the 'dataprep_lite' directory (because it has an __init__.py)
+    # and then recursively find sub-packages within it (cleaning, core, preprocessing).
     packages=find_packages(exclude=['tests', 'tests.*', 'examples', 'examples.*']),
+
+    # If your actual package 'dataprep_lite' was inside an 'src' directory
+    # (e.g., src/dataprep_lite), you would use:
+    # package_dir={'': 'src'},
+    # packages=find_packages(where='src', exclude=['tests', 'tests.*', 'examples', 'examples.*']),
+    # But given your current structure, the above find_packages is correct.
+
     install_requires=[
         'pandas>=1.3.0',
         'numpy>=1.20.0',
@@ -70,6 +78,7 @@ setup(
             'pytest>=6.0',
             'twine>=3.0.0',
             'wheel',
+            'build', # Add 'build' to dev dependencies
         ],
     },
 )
