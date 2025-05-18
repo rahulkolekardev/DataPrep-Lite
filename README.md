@@ -1,4 +1,3 @@
-
 <p align="center">
   <!-- Optional: Add a logo here if you have one -->
   <!-- <img src="path/to/your/logo.png" alt="DataPrep-Lite Logo" width="200"/> -->
@@ -10,11 +9,20 @@
 </p>
 
 <p align="center">
+  <!-- Badges: Replace placeholders with actual links once set up -->
+  <a href="https://pypi.org/project/dataprep-lite/">
+    <img src="https://img.shields.io/pypi/v/dataprep-lite.svg?style=flat-square" alt="PyPI version">
+  </a>
+  <a href="https://pypi.org/project/dataprep-lite/">
+    <img src="https://img.shields.io/pypi/pyversions/dataprep-lite.svg?style=flat-square" alt="Python versions">
+  </a>
 
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="License: MIT">
   </a>
-
+  <!-- <a href="https://codecov.io/gh/rahulkolekardev/DataPrep-Lite"> <!-- YOUR REPO URL -->
+    <!-- <img src="https://img.shields.io/codecov/c/github/rahulkolekardev/DataPrep-Lite?style=flat-square" alt="Codecov"> <!-- YOUR REPO URL -->
+  <!-- </a> -->
 </p>
 
 ---
@@ -236,7 +244,6 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 ```text
 MIT License
 
-Copyright (c) [Year] [Your Name or Organization - e.g., Rahul Kolekar]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
