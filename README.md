@@ -239,7 +239,6 @@ See the [open issues](https://github.com/rahulkolekardev/DataPrep-Lite/issues) f
 ## 📜 License
 
 Distributed under the MIT License. See `LICENSE` file for more information.
-(You will need to create a `LICENSE` file in your repository, typically with the MIT License text).
 
 ```text
 MIT License
