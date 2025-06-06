@@ -2,9 +2,19 @@ import pandas as pd
 import numpy as np
 from typing import List
 
-def identify_numeric_columns(df: pd.DataFrame) -> List[str]:
-    """Identifies numeric (integer or float) columns."""
-    return df.select_dtypes(include=np.number).columns.tolist()
+def identify_numeric_columns(df: pd.DataFrame, include_object_numeric_like: bool = False) -> List[str]:
+    """Identifies numeric columns. Optionally includes object columns that look numeric."""
+    numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
+    if include_object_numeric_like:
+        obj_cols = df.select_dtypes(include=["object", "string"]).columns
+        for col in obj_cols:
+            try:
+                converted = pd.to_numeric(df[col], errors="coerce")
+                if converted.notna().sum() > 0:
+                    numeric_cols.append(col)
+            except Exception:
+                continue
+    return numeric_cols
 
 def identify_categorical_columns(df: pd.DataFrame, 
                                  include_object: bool = True,

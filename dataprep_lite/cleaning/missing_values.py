@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from typing import List, Optional, Any, Union
+from sklearn.impute import KNNImputer
 from ..core.base_transformer import BaseTransformer
 from ..core.utils import identify_numeric_columns
 
@@ -96,6 +97,51 @@ class ConstantImputer(_BaseImputer):
         for col in self._processed_columns:
             self.imputation_values_[col] = self.fill_value
         return self
+
+
+class KNNImputerWrapper(_BaseImputer):
+    """Wrapper around sklearn.impute.KNNImputer."""
+    def __init__(self,
+                 columns_to_process: Optional[List[str]] = None,
+                 n_neighbors: int = 5,
+                 weights: str = "uniform",
+                 metric: str = "nan_euclidean"):
+        super().__init__(columns_to_process)
+        self.n_neighbors = n_neighbors
+        self.weights = weights
+        self.metric = metric
+        self.imputer_: Optional[KNNImputer] = None
+
+    def _get_compatible_columns(self, X: pd.DataFrame) -> List[str]:
+        return identify_numeric_columns(X)
+
+    def fit(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> 'KNNImputerWrapper':
+        super().fit(X, y)
+        self._processed_columns = self._get_columns_to_operate_on(X)
+
+        if not self._processed_columns:
+            self.imputer_ = None
+            return self
+
+        self.imputer_ = KNNImputer(n_neighbors=self.n_neighbors,
+                                   weights=self.weights,
+                                   metric=self.metric)
+        self.imputer_.fit(X[self._processed_columns])
+        return self
+
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        X_transformed = super().transform(X)
+        if not self.imputer_ or not self._processed_columns:
+            return X_transformed
+
+        current_cols = [c for c in self._processed_columns if c in X_transformed.columns]
+        if not current_cols:
+            return X_transformed
+
+        imputed = self.imputer_.transform(X_transformed[current_cols])
+        X_transformed[current_cols] = imputed
+        return X_transformed
+
 
 
 class DropMissing(BaseTransformer):

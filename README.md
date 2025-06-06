@@ -143,11 +143,14 @@ print("\nCleaned DataFrame dtypes:\n", df_cleaned.dtypes)
     *   `MedianImputer(columns_to_process=None)`: Imputes with median.
     *   `ModeImputer(columns_to_process=None)`: Imputes with mode.
     *   `ConstantImputer(fill_value, columns_to_process=None)`: Imputes with a constant.
+    *   `KNNImputerWrapper(columns_to_process=None)`: K-nearest neighbors imputation.
     *   `DropMissing(axis=0, how='any', thresh=None, subset=None)`: Drops rows/columns with NaNs.
 *   **`DropDuplicates(subset=None, keep='first', ignore_index=False)`**: Removes duplicate rows.
 *   **`OutlierIQRHandler(columns_to_process=None, factor=1.5, action='cap')`**: Handles outliers using IQR (`action` can be `'cap'` or `'remove_rows'`).
 *   **`TypeConverter(type_mapping, errors='raise')`**: Converts column data types (e.g., `{'col': 'int64'}`, `{'col': 'to_numeric'}`).
 *   **`BasicTextCleaner(columns_to_process=None, lowercase=True, strip_whitespace=True, remove_punctuation=True, ...)`**: Performs basic text cleaning.
+*   **`StopWordRemover(columns_to_process=None)`**: Removes common stop words from text.
+*   **`TfidfVectorizerWrapper(columns_to_process=None)`**: Converts text columns into TF-IDF features.
 
 ### Preprocessing Transformers (`dataprep_lite.preprocessing`)
 
@@ -159,6 +162,8 @@ print("\nCleaned DataFrame dtypes:\n", df_cleaned.dtypes)
     *   `StandardScalerWrapper(...)`: Wraps `sklearn.preprocessing.StandardScaler`.
 *   **`KBinsDiscretizerWrapper(...)`**: Bins continuous data. Wraps `sklearn.preprocessing.KBinsDiscretizer`.
 *   **`DatetimeFeatureCreator(...)`**: Extracts features (year, month, day, hour, etc.) from datetime columns.
+*   **`VarianceThresholdSelector(...)`**: Removes features with variance below a threshold.
+*   **`CorrelationFilter(...)`**: Drops one of two highly correlated features.
 
 *For detailed parameters of each transformer, please refer to their respective docstrings or the source code.*
 
@@ -225,14 +230,14 @@ You can also contribute by:
 
 ## 🗺️ Roadmap
 
-*   [ ] More advanced imputation techniques (e.g., KNNImputer wrapper).
-*   [ ] Additional text processing features (e.g., TF-IDF, stop word removal).
-*   [ ] Feature selection transformers (e.g., variance threshold, correlation-based).
-*   [ ] Enhanced reporting and logging capabilities for applied transformations.
-*   [ ] More robust handling of mixed-type columns in various transformers.
-*   [ ] Comprehensive Sphinx documentation hosted on ReadTheDocs.
-*   [ ] More extensive examples and tutorials.
-*   [ ] Integration with other data science ecosystem tools.
+*   [x] More advanced imputation techniques (e.g., KNNImputer wrapper).
+*   [x] Additional text processing features (e.g., TF-IDF, stop word removal).
+*   [x] Feature selection transformers (e.g., variance threshold, correlation-based).
+*   [x] Enhanced reporting and logging capabilities for applied transformations.
+*   [x] More robust handling of mixed-type columns in various transformers.
+*   [x] Comprehensive Sphinx documentation hosted on ReadTheDocs.
+*   [x] More extensive examples and tutorials.
+*   [x] Integration with other data science ecosystem tools.
 
 See the [open issues](https://github.com/rahulkolekardev/DataPrep-Lite/issues) for a full list of proposed features (and known issues).
 
