@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import logging
 import pandas as pd
 from typing import List, Optional, Any
 
@@ -58,16 +59,19 @@ class BaseTransformer(ABC):
         Fit the transformer to data X.
         Learned parameters should be stored as attributes ending with an underscore.
         """
+        logging.info(f"Fitting {self.__class__.__name__}")
         if not isinstance(X, pd.DataFrame):
             raise TypeError("Input X for fit must be a pandas DataFrame.")
         self._feature_names_in = X.columns.tolist()
         # _processed_columns will be set by the subclass's call to _get_columns_to_operate_on
         self._is_fitted = True
+        logging.info(f"Finished fitting {self.__class__.__name__}")
         return self
 
     @abstractmethod
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """Apply the learned transformation to data X."""
+        logging.info(f"Transforming data with {self.__class__.__name__}")
         self._check_is_fitted()
         if not isinstance(X, pd.DataFrame):
             raise TypeError("Input X for transform must be a pandas DataFrame.")
@@ -83,6 +87,7 @@ class BaseTransformer(ABC):
             )
         
         X_transformed = self._validate_and_copy_df(X)
+        logging.info(f"Finished transforming with {self.__class__.__name__}")
         return X_transformed
 
     def fit_transform(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> pd.DataFrame:

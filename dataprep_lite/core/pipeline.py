@@ -1,6 +1,7 @@
 # dataprep_lite/core/pipeline.py
 import pandas as pd
-from typing import List, Tuple, Optional, Any 
+import logging
+from typing import List, Tuple, Optional, Any
 from .base_transformer import BaseTransformer
 
 class Pipeline:
@@ -67,36 +68,45 @@ class Pipeline:
 
     def fit(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> 'Pipeline':
         """Fit all transformers in the pipeline."""
+        logging.info("Fitting pipeline")
         Xt = X
         if not self.steps: # Handle empty pipeline
             self._is_fitted = True
             return self
 
         for i, (name, transformer) in enumerate(self.steps):
+            logging.info(f"Fitting step {name}")
             if i < len(self.steps) - 1: # All but the last
                 Xt = transformer.fit_transform(Xt, y)
             else: # Last transformer
                 transformer.fit(Xt, y)
         self._is_fitted = True
+        logging.info("Finished fitting pipeline")
         return self
 
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """Apply transforms to the data, assuming pipeline is fitted."""
         if not self._is_fitted:
              raise RuntimeError("Pipeline has not been fitted. Call 'fit' before 'transform'.")
+        logging.info("Transforming data with pipeline")
         Xt = X
         for name, transformer in self.steps:
+            logging.info(f"Applying step {name}")
             Xt = transformer.transform(Xt)
+        logging.info("Finished pipeline transform")
         return Xt
 
     def fit_transform(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> pd.DataFrame:
         """Fit all transformers, then transform the data."""
+        logging.info("Fit-transform pipeline")
         Xt = X
         if not self.steps: # Handle empty pipeline
             self._is_fitted = True
             return Xt # Return original data if pipeline is empty
 
         for name, transformer in self.steps:
+            logging.info(f"Fit-transform step {name}")
             Xt = transformer.fit_transform(Xt, y)
         self._is_fitted = True
+        logging.info("Finished fit-transform pipeline")
         return Xt

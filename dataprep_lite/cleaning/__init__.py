@@ -3,6 +3,7 @@ from .missing_values import (
     MedianImputer,
     ModeImputer,
     ConstantImputer,
+    KNNImputerWrapper,
     DropMissing
 )
 from .duplicates import DropDuplicates
@@ -11,7 +12,12 @@ from .data_types import TypeConverter
 from .text_cleaning import BasicTextCleaner
 
 __all__ = [
-    "MeanImputer", "MedianImputer", "ModeImputer", "ConstantImputer", "DropMissing",
+    "MeanImputer",
+    "MedianImputer",
+    "ModeImputer",
+    "ConstantImputer",
+    "KNNImputerWrapper",
+    "DropMissing",
     "DropDuplicates",
     "OutlierIQRHandler",
     "TypeConverter",
