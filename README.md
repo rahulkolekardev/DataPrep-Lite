@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://pepy.tech/projects/dataprep-lite"><img src="https://static.pepy.tech/badge/dataprep-lite" alt="PyPI Downloads"></a>
   <!-- Badges: Replace placeholders with actual links once set up -->
   <a href="https://pypi.org/project/dataprep-lite/">
     <img src="https://img.shields.io/pypi/v/dataprep-lite.svg?style=flat-square" alt="PyPI version">
